@@ -1,12 +1,5 @@
 library(shiny)
 library(shinydashboard)
-library(dplyr)
-library(ggplot2)
-library(tidyr)
-library(scales)
-library(ggthemes)
-library(grid)
-library(gridExtra)
 
 source("helpers.R")
 
@@ -27,14 +20,11 @@ shinyServer(function(input, output){
   output$barPlot <- renderPlot({
     plotBar(
       df = barPlotList$data,
-      xCol = barPlotList$xCol,
       yCol = theStat(),
       lab = statLabel(),
       yFrom = barPlotList$mins[theStat()],
       yTo = barPlotList$maxes[theStat()],
-      yBy = barPlotList$yTicks[theStat()],
-      facetRow = barPlotList$facetRow,
-      facetCol = barPlotList$facetCol
+      yBy = barPlotList$yTicks[theStat()]
     )
   })
 })

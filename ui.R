@@ -13,14 +13,22 @@ shinyUI(dashboardPage(
   ),
   dashboardBody(
     fluidRow(
-        valueBox(10 * 2, "New Orders", icon = icon("credit-card"), width = 2),
-        valueBox(10 * 2, "New Orders", icon = icon("credit-card"), width = 2),
-        valueBox(10 * 2, "New Orders", icon = icon("credit-card"), width = 2),
-        valueBox(10 * 2, "New Orders", icon = icon("credit-card"), width = 2)
+      column(
+        width = 3,
+        valueBox(10 * 2, "New Orders", icon = icon("credit-card"), width = NULL)
+      ),
+      column(
+        width = 3,
+        valueBox(10 * 2, "New Orders", icon = icon("credit-card"), width = NULL)
+      ),
+      column(
+        width = 3,
+        valueBox(10 * 2, "New Orders", icon = icon("credit-card"), width = NULL)
+      )
     ),
     fluidRow(
       box(
-        width = 8,
+        width = 9,
         title = "Non-playoff and Playoff Teams by Year",
         status = "primary",
         solidHeader = TRUE,

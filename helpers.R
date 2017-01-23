@@ -1,3 +1,11 @@
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(scales)
+library(ggthemes)
+library(grid)
+library(gridExtra)
+
 #use function to prepare master data to use garbage cleanup
 #rather than relying on access to rm() command
 getMasterData <- function(){
@@ -31,15 +39,12 @@ getBarPlotData <- function(masterData, summaryCols){
     data = barPlotData,
     mins = mins,
     maxes = maxes,
-    yTicks = yTicks,
-    xCol = "madePlayoffs",
-    facetRow = ".",
-    facetCol = "yearID"
+    yTicks = yTicks
   ))
 }
 
 #plot the chosen statistic by nonplayoff/playoff team by year
-plotBar <- function(df, xCol="madePlayoffs", yCol, lab, yFrom, yTo, yBy, facetRow=".", facetCol="yearID"){
+plotBar <- function(df, yCol, lab, yFrom, yTo, yBy){
   xAxisTitle <- "Made Playoffs"
   roundYAxis <- 1
   background <- "#FFFFFF"
@@ -50,10 +55,9 @@ plotBar <- function(df, xCol="madePlayoffs", yCol, lab, yFrom, yTo, yBy, facetRo
     roundYAxis <- 0
   }
   
-  ggplot(df, aes_string(x=xCol, y=yCol)) +
-    geom_bar(stat="identity", aes_string(fill = xCol)) +
-    facet_grid(reformulate(facetCol, facetRow)) +
-    labs(x=xAxisTitle, y=paste("Mean", lab)) +
+  ggplot(df, aes_string(x="yearID", y=yCol)) +
+    geom_bar(stat="identity", position = "dodge", aes_string(fill = "madePlayoffs")) +
+    labs(x="Year", y=paste("Mean", lab)) +
     ggtitle(label = paste("Mean", lab)) + #, subtitle = "Non-playoff and playoff teams by year") +
     theme_fivethirtyeight() +
     theme(
@@ -64,17 +68,14 @@ plotBar <- function(df, xCol="madePlayoffs", yCol, lab, yFrom, yTo, yBy, facetRo
       plot.subtitle = element_text(hjust = 0, size = 15, face = "italic"),
       axis.title = element_text(size = 14),
       axis.text.y = element_text(size = 12),
-      axis.text.x = element_blank(),
-      strip.text.y = element_blank(),
-      strip.text.x = element_text(size=12, color = "#000000"),
-      strip.background = element_rect(fill = background),
-      legend.position = "bottom",
-      legend.direction = "horizontal",
+      axis.text.x = element_text(size = 12),
+      legend.position = "right",
+      legend.direction = "vertical",
       legend.background = element_rect(fill = background),
       legend.box.spacing = unit(0.05, "in"),
       legend.key.size = unit(.2, "in")
     ) +
-    scale_fill_brewer(name = "", palette = "Set1") +
+    scale_fill_brewer(name = "Made Playoffs", palette = "Set1") +
     coord_cartesian(ylim=c(yFrom, yTo)) +
     scale_y_continuous(breaks = round(seq(yFrom, yTo, by = yBy), roundYAxis), labels = comma)
 }
