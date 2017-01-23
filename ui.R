@@ -1,3 +1,4 @@
+library(shiny)
 library(shinydashboard)
 
 shinyUI(dashboardPage(
@@ -11,24 +12,21 @@ shinyUI(dashboardPage(
     selectInput(inputId = "theStat", choices = lblList, label = "Select a variable")
   ),
   dashboardBody(
-    plotOutput("barPlot")
-    # tabItems(
-    #   tabItem(tabName = "map",
-    #           fluidRow(
-    #             infoBoxOutput("maxBox"),
-    #             infoBoxOutput("minBox"),
-    #             infoBoxOutput("avgBox"),
-    #             # gvisGeoChart
-    #             box(htmlOutput("map"), height = 450),
-    #             # gvisHistoGram
-    #             box(htmlOutput("hist"), height = 450)
-    #           )
-    #   ),
-    #   tabItem(tabName = "data",
-    #           fluidRow(
-    #             box(DT::dataTableOutput("table"), width = 12)
-    #           )        
-    #   )
-    # )
+    fluidRow(
+        valueBox(10 * 2, "New Orders", icon = icon("credit-card"), width = 2),
+        valueBox(10 * 2, "New Orders", icon = icon("credit-card"), width = 2),
+        valueBox(10 * 2, "New Orders", icon = icon("credit-card"), width = 2),
+        valueBox(10 * 2, "New Orders", icon = icon("credit-card"), width = 2)
+    ),
+    fluidRow(
+      box(
+        width = 8,
+        title = "Non-playoff and Playoff Teams by Year",
+        status = "primary",
+        solidHeader = TRUE,
+        collapsible = FALSE,
+        plotOutput("barPlot")
+      )
+    )
   )
 ))

@@ -54,7 +54,7 @@ plotBar <- function(df, xCol="madePlayoffs", yCol, lab, yFrom, yTo, yBy, facetRo
     geom_bar(stat="identity", aes_string(fill = xCol)) +
     facet_grid(reformulate(facetCol, facetRow)) +
     labs(x=xAxisTitle, y=paste("Mean", lab)) +
-    ggtitle(label = paste("Mean", lab), subtitle = "Non-playoff and playoff teams by year") +
+    ggtitle(label = paste("Mean", lab)) + #, subtitle = "Non-playoff and playoff teams by year") +
     theme_fivethirtyeight() +
     theme(
       panel.spacing.x = unit(.2, "in"),

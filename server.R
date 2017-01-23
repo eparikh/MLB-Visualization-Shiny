@@ -1,3 +1,5 @@
+library(shiny)
+library(shinydashboard)
 library(dplyr)
 library(ggplot2)
 library(tidyr)
@@ -15,7 +17,10 @@ barPlotList <- getBarPlotData(masterData, summaryCols)
 shinyServer(function(input, output){
   
   theStat <- reactive({input$theStat})
-  statLabel <- reactive({statToLabel[theStat()]})
+  statLabel <- reactive({statToLabel[[theStat()]]})
+  
+  #PAGE TITLE
+  output$title <- renderText({statLabel()})
   
   
   #BAR PLOT
