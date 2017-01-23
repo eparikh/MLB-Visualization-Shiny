@@ -14,8 +14,9 @@ barPlotList <- getBarPlotData(masterData, summaryCols)
 
 shinyServer(function(input, output){
   
-  statLabel <- reactive({input$statLabel})
-  theStat <- reactive({lblList[[statLabel()]]})
+  theStat <- reactive({input$theStat})
+  statLabel <- reactive({statToLabel[theStat()]})
+  
   
   #BAR PLOT
   output$barPlot <- renderPlot({

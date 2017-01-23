@@ -50,7 +50,7 @@ plotBar <- function(df, xCol="madePlayoffs", yCol, lab, yFrom, yTo, yBy, facetRo
     roundYAxis <- 0
   }
   
-  ggplot(dataBarGraph, aes_string(x=xCol, y=yCol)) +
+  ggplot(df, aes_string(x=xCol, y=yCol)) +
     geom_bar(stat="identity", aes_string(fill = xCol)) +
     facet_grid(reformulate(facetCol, facetRow)) +
     labs(x=xAxisTitle, y=paste("Mean", lab)) +

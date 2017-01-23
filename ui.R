@@ -1,14 +1,14 @@
 library(shinydashboard)
 
 shinyUI(dashboardPage(
-  dashboardHeader(title = "Test Header"),
+  dashboardHeader(title = "MLB Analysis"),
   dashboardSidebar(
     #sidebarUserPanel("Emil Parikh"),
     sidebarMenu(
       #menuItem("Map", tabName = "map", icon = icon("map")),
       #menuItem("Data", tabName = "data", icon = icon("database"))
     ),
-    selectInput(inputId = "statLabel", choices = lbls, label = "Select a variable")
+    selectInput(inputId = "theStat", choices = lblList, label = "Select a variable")
   ),
   dashboardBody(
     plotOutput("barPlot")
