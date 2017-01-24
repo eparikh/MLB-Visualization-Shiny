@@ -25,15 +25,22 @@ getMasterData <- function(){
 }
 
 #### MEANDIFF FUNCTION ####
-getMeanDiff <- function(df, statistic){
+getMeanDiff <- function(barPlotData, statistic){
   mean(
     (
-      df %>%
+      barPlotData %>%
        select(yearID, madePlayoffs, one_of(statistic)) %>%
        spread_(key = "madePlayoffs", value = statistic) %>%
        summarise(diff=Yes-No)
     )$diff
   )
+}
+
+#### WS DATA FUNCTION ####
+getWSData <- function(masterData, summaryCols){
+  masterData %>%
+    filter(WSWin) %>%
+    select(yearID, franchID, one_of(summaryCols))
 }
 
 ##### BARPLOT FUNCTIONS  #####

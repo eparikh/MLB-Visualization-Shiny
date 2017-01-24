@@ -29,6 +29,10 @@ shinyUI(dashboardPage(
         solidHeader = FALSE,
         collapsible = FALSE,
         plotOutput("barPlot")
+      ),
+      column(
+        width = 4,
+        dataTableOutput("wsTable")
       )
     )
   )
