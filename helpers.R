@@ -24,6 +24,18 @@ getMasterData <- function(){
   return(data)
 }
 
+#### MEANDIFF FUNCTION ####
+getMeanDiff <- function(df, statistic){
+  mean(
+    (
+      df %>%
+       select(yearID, madePlayoffs, one_of(statistic)) %>%
+       spread_(key = "madePlayoffs", value = statistic) %>%
+       summarise(diff=Yes-No)
+    )$diff
+  )
+}
+
 ##### BARPLOT FUNCTIONS  #####
 getBarPlotData <- function(masterData, summaryCols){
   barPlotData <- masterData %>%
@@ -58,14 +70,14 @@ plotBar <- function(df, yCol, lab, yFrom, yTo, yBy){
   ggplot(df, aes_string(x="yearID", y=yCol)) +
     geom_bar(stat="identity", position = "dodge", aes_string(fill = "madePlayoffs")) +
     labs(x="Year", y=paste("Mean", lab)) +
-    ggtitle(label = paste("Mean", lab)) + #, subtitle = "Non-playoff and playoff teams by year") +
+    ggtitle(label = paste("Mean", lab), subtitle = "Non-playoff and playoff teams by year") +
     theme_fivethirtyeight() +
     theme(
       panel.spacing.x = unit(.2, "in"),
       panel.background = element_rect(fill = background),
       plot.background = element_blank(),
-      plot.title = element_text(hjust = 0, size = 19),
-      plot.subtitle = element_text(hjust = 0, size = 15, face = "italic"),
+      plot.title = element_text(hjust = 0.5, size = 19),
+      plot.subtitle = element_text(hjust = 0.5, size = 15, face = "italic"),
       axis.title = element_text(size = 14),
       axis.text.y = element_text(size = 12),
       axis.text.x = element_text(size = 12),
@@ -79,3 +91,5 @@ plotBar <- function(df, yCol, lab, yFrom, yTo, yBy){
     coord_cartesian(ylim=c(yFrom, yTo)) +
     scale_y_continuous(breaks = round(seq(yFrom, yTo, by = yBy), roundYAxis), labels = comma)
 }
+
+rnd <- function(x){trunc(x+sign(x)*0.5)}

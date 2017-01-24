@@ -12,26 +12,21 @@ shinyUI(dashboardPage(
     selectInput(inputId = "theStat", choices = lblList, label = "Select a variable")
   ),
   dashboardBody(
-    fluidRow(
-      column(
-        width = 3,
-        valueBox(10 * 2, "New Orders", icon = icon("credit-card"), width = NULL)
-      ),
-      column(
-        width = 3,
-        valueBox(10 * 2, "New Orders", icon = icon("credit-card"), width = NULL)
-      ),
-      column(
-        width = 3,
-        valueBox(10 * 2, "New Orders", icon = icon("credit-card"), width = NULL)
-      )
+    # column(
+    #   width = 12,
+    #   align = "center"
+    #   #h1(textOutput("title"))
+    # ),
+    column(
+      width = 12,
+      valueBoxOutput(outputId = "meandiff", width = NULL)
     ),
+
     fluidRow(
       box(
-        width = 9,
-        title = "Non-playoff and Playoff Teams by Year",
+        width = 8,
         status = "primary",
-        solidHeader = TRUE,
+        solidHeader = FALSE,
         collapsible = FALSE,
         plotOutput("barPlot")
       )
