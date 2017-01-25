@@ -1,47 +1,103 @@
 library(shiny)
 library(shinydashboard)
+library(DT)
 
 source("helpers.R")
 
 masterData <- getMasterData()
-barPlotList <- getBarPlotData(masterData, summaryCols)
-wsData <- getWSData(masterData, summaryCols)
-
 
 shinyServer(function(input, output){
   
-  theStat <- reactive({input$theStat})
-  statLabel <- reactive({statToLabel[[theStat()]]})
+  #dropdown selected statistic
+  theStat <- reactive(input$theStat)
   
-  #PAGE TITLE
-  output$title <- renderText({statLabel()})
+  #how much to round
+  roundPlaces <- reactive({
+    if(theStat() %in% c("OBP", "BA")) {
+      return(3)
+    } else{
+      return(1)
+    }
+  })
+  
+  #statistic to label mapping
+  statLabel <- reactive(statToLabel[[theStat()]])
+  shortLabel <- reactive(statToShortLabel[[theStat()]])
+  
+  #radio button to include/exclude bottom MLB teams 
+  includeBottom <- reactive(input$includeBottom)
+  
+  #get mean/bar data filtered by includeBottom
+  barPlotList <- reactive({
+    if(includeBottom()){
+      grps <- c(1,2,3)
+    }else{
+      grps <- c(1,2)
+    }
+    
+    return(getBarPlotData(masterData, summaryCols, grps))
+  }) 
+  
+  #TITLES
+  output$pageTitle <- renderText({statLabel()})
+  
+  output$barPlotTitle <- renderText({
+    paste("Mean", shortLabel(), "by Year and Playoff Status")
+  })
+  
+  output$diffTableTitle <- renderText({
+    paste("Difference of Playoff and Non-playoff", shortLabel())
+  })
   
   #MEANDIFF
+  #mean and data for mean differences
+  diffList <- reactive({
+    return(getDiff(barPlotList()$data, theStat(), roundPlaces()))
+  })
+  
   output$meandiff <- renderValueBox({
-    meanDiff <- round(getMeanDiff(barPlotList$data, theStat()),3)
+    meanDiff <- round(diffList()$mean,3)
     valueBox(
       value = meanDiff,
-      subtitle = paste("Mean difference in", statLabel(),"of playoff and non-playoff teams from 2005 to 2015."),
+      subtitle = paste("Mean difference in", tolower(statLabel()), "of playoff and non-playoff teams from 2005 to 2015."),
       icon = icon("thumbs-up"),
       color = "green"
     )
   })
   
-  #WS Table
-  output$wsTable <- renderDataTable({
-    wsData[,c("yearID", "franchID", theStat())]
+  #diff table
+  output$diffTable <- renderDataTable(
+    datatable(
+      isolate({
+        diffList()$data
+      }),
+      options = list(
+        processing = FALSE,
+        searching = FALSE,
+        paging=FALSE,
+        ordering=FALSE
+      ),
+      selection="none"
+    )
+  )
+  
+  proxy = dataTableProxy("diffTable")
+  observe({
+    replaceData(proxy, diffList()$data)
   })
   
   
   #BAR PLOT
   output$barPlot <- renderPlot({
+    bpl <- barPlotList()
     plotBar(
-      df = barPlotList$data,
+      df = bpl$data,
       yCol = theStat(),
       lab = statLabel(),
-      yFrom = barPlotList$mins[theStat()],
-      yTo = barPlotList$maxes[theStat()],
-      yBy = barPlotList$yTicks[theStat()]
+      yFrom = bpl$mins[theStat()],
+      yTo = bpl$maxes[theStat()],
+      yBy = bpl$yTicks[theStat()],
+      roundYAxis = roundPlaces()
     )
   })
   

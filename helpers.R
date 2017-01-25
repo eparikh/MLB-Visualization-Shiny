@@ -12,40 +12,53 @@ getMasterData <- function(){
   data <- readRDS(file = "data/Teams2005AndUp.rds")
   
   #separate by playoff vs nonplayoff
-  playoff <- data %>% filter(DivWin | WCWin)
-  nonplayoff <- data %>% filter(!(DivWin | WCWin))
+  playoff <- data %>%
+    filter(DivWin | WCWin) %>%
+    mutate(group = 1)
   
-  #get top 8 non playoff teams per year to eliminiate skew of mean by the worst teams
-  nonplayoff_top <- as.data.frame(nonplayoff %>% group_by(yearID) %>% top_n(8, winPercent))
+  #divide each nonplayoff team by top/bottom percentage by year
+  #2 = top nonplayoff 1=bottom, but change to 3 so doesn't conflict with playoff teams
+  nonplayoff <- data %>%
+    filter(!(DivWin | WCWin)) %>%
+    group_by(yearID) %>%
+    mutate(group = ntile(winPercent, 2))
+  
+  nonplayoff[nonplayoff$group==1, ]$group = 3
+  
+  nonplayoff <- as.data.frame(nonplayoff)
   
   #final data to work with
-  data <- rbind(playoff, nonplayoff_top) %>% arrange(yearID)
+  data <- rbind(playoff, nonplayoff) %>% arrange(yearID)
   
   return(data)
 }
 
 #### MEANDIFF FUNCTION ####
-getMeanDiff <- function(barPlotData, statistic){
-  mean(
-    (
-      barPlotData %>%
-       select(yearID, madePlayoffs, one_of(statistic)) %>%
-       spread_(key = "madePlayoffs", value = statistic) %>%
-       summarise(diff=Yes-No)
-    )$diff
-  )
+getDiff <- function(barPlotData, statistic, roundPlaces){
+  data <- barPlotData %>%
+    select(Year=yearID, madePlayoffs, one_of(statistic)) %>%
+    spread_(key = "madePlayoffs", value = statistic) %>%
+    summarise(Difference=Yes-No)
+  
+  m <- mean(data$Difference)
+  
+  data$Difference <- round(data$Difference, roundPlaces)
+  
+  data <- as.data.frame(data)
+  rownames(data) <- data$Year
+  data$Year <- NULL
+    
+  return(list(
+    data = data,
+    mean = m
+  ))
 }
 
-#### WS DATA FUNCTION ####
-getWSData <- function(masterData, summaryCols){
-  masterData %>%
-    filter(WSWin) %>%
-    select(yearID, franchID, one_of(summaryCols))
-}
 
 ##### BARPLOT FUNCTIONS  #####
-getBarPlotData <- function(masterData, summaryCols){
+getBarPlotData <- function(masterData, summaryCols, grps){
   barPlotData <- masterData %>%
+    filter(group %in% grps) %>%
     group_by(yearID, madePlayoffs) %>%
     summarise_each(funs(mean), one_of(summaryCols))
   
@@ -63,28 +76,21 @@ getBarPlotData <- function(masterData, summaryCols){
 }
 
 #plot the chosen statistic by nonplayoff/playoff team by year
-plotBar <- function(df, yCol, lab, yFrom, yTo, yBy){
+plotBar <- function(df, yCol, lab, yFrom, yTo, yBy, roundYAxis){
   xAxisTitle <- "Made Playoffs"
-  roundYAxis <- 1
   background <- "#FFFFFF"
-  
-  if(yCol %in% c("OBP", "BA")) {
-    roundYAxis <- 3
-  } else if(yCol == "attendancePerGame"){
-    roundYAxis <- 0
-  }
   
   ggplot(df, aes_string(x="yearID", y=yCol)) +
     geom_bar(stat="identity", position = "dodge", aes_string(fill = "madePlayoffs")) +
     labs(x="Year", y=paste("Mean", lab)) +
-    ggtitle(label = paste("Mean", lab), subtitle = "Non-playoff and playoff teams by year") +
+    #ggtitle(label = paste("Mean", lab) , subtitle = "Non-playoff and playoff teams by year") +
     theme_fivethirtyeight() +
     theme(
       panel.spacing.x = unit(.2, "in"),
       panel.background = element_rect(fill = background),
       plot.background = element_blank(),
-      plot.title = element_text(hjust = 0.5, size = 19),
-      plot.subtitle = element_text(hjust = 0.5, size = 15, face = "italic"),
+      #plot.title = element_text(hjust = 0.5, size = 19),
+      #plot.subtitle = element_text(hjust = 0.5, size = 15, face = "italic"),
       axis.title = element_text(size = 14),
       axis.text.y = element_text(size = 12),
       axis.text.x = element_text(size = 12),

@@ -26,4 +26,15 @@ statToLabel <- list(
   "BB" = "Walks"
 )
 
+statToShortLabel <- list(
+  "ERA" = "ERA",
+  "BA" = "BA",
+  "HR" = "HR",
+  "OBP" = "OBP",
+  "R" = "R",
+  "SO" = "SO",
+  "SOtoHR" = "SO to HR Ratio",
+  "BB" = "BB"
+)
+
 summaryCols <- unlist(lblList, use.names = F)
