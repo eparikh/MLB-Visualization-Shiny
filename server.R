@@ -60,7 +60,7 @@ shinyServer(function(input, output){
     valueBox(
       value = meanDiff,
       subtitle = paste("Mean difference in", tolower(statLabel()), "of playoff and non-playoff teams from 2005 to 2015."),
-      icon = icon("thumbs-up"),
+      #icon = icon("thumbs-up"),
       color = "green"
     )
   })

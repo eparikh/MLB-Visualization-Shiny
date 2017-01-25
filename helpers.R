@@ -44,9 +44,10 @@ getDiff <- function(barPlotData, statistic, roundPlaces){
   
   data$Difference <- round(data$Difference, roundPlaces)
   
-  data <- as.data.frame(data)
-  rownames(data) <- data$Year
-  data$Year <- NULL
+  # data <- as.data.frame(data)
+  # rownames(data) <- data$Year
+  # print(colnames(data))
+  # data$Year <- NULL
     
   return(list(
     data = data,
@@ -100,7 +101,7 @@ plotBar <- function(df, yCol, lab, yFrom, yTo, yBy, roundYAxis){
       legend.box.spacing = unit(0.05, "in"),
       legend.key.size = unit(.2, "in")
     ) +
-    scale_fill_brewer(name = "Made Playoffs", palette = "Set1") +
+    scale_fill_manual(name = "Made Playoffs", values = c("#cc0000", "#000088")) +
     coord_cartesian(ylim=c(yFrom, yTo)) +
     scale_y_continuous(breaks = round(seq(yFrom, yTo, by = yBy), roundYAxis), labels = comma)
 }
