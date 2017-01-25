@@ -7,38 +7,40 @@ shinyUI(dashboardPage(
   dashboardSidebar(
     #sidebarUserPanel("MLB Playoff Visualization", image = "baseball.jpg", subtitle = "he"),
     selectInput(inputId = "theStat", choices = lblList, label = h4("Select a statistic")),
-    radioButtons(
-      "includeBottom",
-      inline = TRUE,
-      label = h4("Include bottom half of non-playoff teams in comparison?"),
-      choices = list("Yes" = TRUE, "No" = FALSE),
-      selected = TRUE
-    ),
-    br(),
     sidebarMenu(
-      menuItem("Playoff vs. Non-playoff", icon = icon("map"), href="#top"),
-      menuItem("Variation in Statistics", icon = icon("database"), href = "#cv")
+      menuItem("Playoff vs. Non-playoff", icon = icon("bar-chart"), href="#top"),
+      menuItem("Home vs. Away", icon = icon("home"), href = "#homeaway")
     )
   ),
   dashboardBody(
     tags$head(
       tags$link(rel = "stylesheet", type = "text/css", href = "app.css")
     ),
-    fluidRow(#PAGETITLE
-      box(
-        width = 12,
-        align = "center",
-        #background = "red",
-        h1(textOutput("pageTitle"), id="top")
-      )
-    ),
+    # fluidRow(#PAGETITLE
+    #   box(
+    #     width = 12,
+    #     align = "left",
+    #     #background = "red",
+    #     h1(textOutput("pageTitle"), id = "page-title"),
+    #     id="title-box"
+    #   )
+    # ),
     fluidRow(#SECTION TITLE
       box(
         width = 12,
-        align = "center",
-        background = "navy",
-        h4("Difference Between Playoff and Non-Playoff Teams")
+        align = "left",
+        #background = "navy",
+        h3("Playoff vs. Non-Playoff Teams"),
+        id = "diff",
+        class = "subheader"
       )
+    ),
+    radioButtons(
+      "includeBottom",
+      inline = TRUE,
+      label = h4("Include bottom half of non-playoff teams in comparison?"),
+      choices = list("Yes" = TRUE, "No" = FALSE),
+      selected = TRUE
     ),
     fluidRow(#SECTION
       box(
@@ -64,9 +66,11 @@ shinyUI(dashboardPage(
       br(),
       box(
         width = 12,
-        align = "center",
-        background = "navy",
-        h4("Variation in Statistics by Year", id="cv")
+        align = "left",
+        #background = "navy",
+        h3("Home vs. Away Games"),
+        id = "homeaway",
+        class = "subheader"
       )
     ),
     tags$script(type = "text/javascript", src = "app.js")

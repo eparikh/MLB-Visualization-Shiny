@@ -31,7 +31,7 @@ statToShortLabel <- list(
   "BA" = "BA",
   "HR" = "HR",
   "OBP" = "OBP",
-  "R" = "R",
+  "R" = "Runs Scored",
   "SO" = "SO",
   "SOtoHR" = "SO to HR Ratio",
   "BB" = "BB"
