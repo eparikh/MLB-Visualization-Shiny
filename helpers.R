@@ -1,5 +1,6 @@
 library(dplyr)
 library(ggplot2)
+library(ggcorrplot)
 library(tidyr)
 library(scales)
 library(ggthemes)
@@ -106,4 +107,46 @@ plotBar <- function(df, yCol, lab, yFrom, yTo, yBy, roundYAxis){
     scale_y_continuous(breaks = round(seq(yFrom, yTo, by = yBy), roundYAxis), labels = comma)
 }
 
-rnd <- function(x){trunc(x+sign(x)*0.5)}
+#rnd <- function(x){trunc(x+sign(x)*0.5)}
+
+
+### GGCORRPLOTS ###
+createPlayoffCorrPlots <- function(masterData){
+  
+  masterData <- masterData[masterData$group==1,]
+  
+  corr <- round(cor(masterData[,c(lblList$Hitting,"winPercent")]),3)
+  corr[abs(corr)<.25]=0
+  p.mat <- cor_pmat(masterData[,c(lblList$Hitting,"winPercent")])
+  gHitting <- ggcorrplot(corr,outline.color = "gray", type = "lower", ggtheme = theme_bw, p.mat = p.mat, insig = "blank", lab = TRUE)
+  
+  corr <- round(cor(masterData[,c(lblList$Pitching,"winPercent")]),3)
+  corr[abs(corr)<.25]=0
+  p.mat <- cor_pmat(masterData[,c(lblList$Pitching,"winPercent")])
+  gPitching <- ggcorrplot(corr,outline.color = "gray", type = "lower", ggtheme = theme_bw, p.mat = p.mat, insig = "blank", lab = TRUE)
+  
+  return(list(
+    hitting = gHitting,
+    pitching = gPitching
+  ))
+}
+
+createNonPlayoffCorrPlots <- function(masterData, grps){
+  
+  masterData <- masterData[masterData$group %in% grps, ]
+  
+  corr <- round(cor(masterData[,c(lblList$Hitting,"winPercent")]),3)
+  corr[abs(corr)<.25]=0
+  p.mat <- cor_pmat(masterData[,c(lblList$Hitting,"winPercent")])
+  gHitting <- ggcorrplot(corr,outline.color = "grey", type = "lower", ggtheme = theme_bw, p.mat = p.mat, insig = "blank", lab = TRUE)
+  
+  corr <- round(cor(masterData[,c(lblList$Pitching,"winPercent")]),3)
+  corr[abs(corr)<.25]=0
+  p.mat <- cor_pmat(masterData[,c(lblList$Pitching,"winPercent")])
+  gPitching <- ggcorrplot(corr,outline.color = "grey", type = "lower", ggtheme = theme_bw, p.mat = p.mat, insig = "blank", lab = TRUE)
+  
+  return(list(
+    hitting = gHitting,
+    pitching = gPitching
+  ))
+}

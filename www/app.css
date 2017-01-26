@@ -17,6 +17,15 @@
   border-left-color: #cc0000;
 }
 
+
+.sidebar-menu:hover{
+	overflow: hidden;
+}
+
+.sidebar-menu{
+	/*border-right: 2px solid #ffffff;*/
+}
+
 /*** header bar background ***/
 .skin-blue .main-header .navbar{
   background-color: #191993;
@@ -95,7 +104,7 @@ div.box{
 /*** subheaders ***/
 .subheader{
   padding: 0px;
-  border-bottom: 1px solid #cccccc;
+  border-bottom: 1px solid #282f32;
 }
 
 .h4,h4{
@@ -113,4 +122,8 @@ div.box{
 
 .small-box>.inner{
   padding: 10px;
+}
+
+#nav-label{
+	padding: 12px 15px 0px 12px;
 }

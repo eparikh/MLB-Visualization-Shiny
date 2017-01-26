@@ -5,6 +5,7 @@ library(DT)
 source("helpers.R")
 
 masterData <- getMasterData()
+playoffCorrPlot <- createPlayoffCorrPlots(masterData)
 
 shinyServer(function(input, output){
   
@@ -86,7 +87,7 @@ shinyServer(function(input, output){
     replaceData(proxy, diffList()$data)
   })
   
-  
+
   #BAR PLOT
   output$barPlot <- renderPlot({
     bpl <- barPlotList()
@@ -101,6 +102,31 @@ shinyServer(function(input, output){
     )
   })
   
+  #CORR PLOTS
+  nonPlayoffCorrPlot <- reactive({
+    if(includeBottom()){
+      grps <- c(2,3)
+    } else{
+      grps <- c(2)
+    }
+    createNonPlayoffCorrPlots(masterData, grps)
+  })
+  
+  output$corrHittingPlayoff <- renderPlot({
+    playoffCorrPlot$hitting
+  })
+  
+  output$corrHittingNonPlayoff <- renderPlot({
+    nonPlayoffCorrPlot()$hitting
+  })
+  
+  output$corrPitchingPlayoff <- renderPlot({
+    playoffCorrPlot$pitching
+  })
+  
+  output$corrPitchingNonPlayoff <- renderPlot({
+    nonPlayoffCorrPlot()$pitching
+  })
   
 
 })

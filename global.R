@@ -5,6 +5,7 @@ lblList <- list(
   Pitching = c(
     "Earned Run Average" = "ERA",
     "Hits Allowed" = "HA",
+    "Home Runs Allowed" = "HRA",
     "Saves" = "SV",
     "Strikeouts" = "SOA",
     "Walks Allowed" = "BBA"
@@ -20,7 +21,7 @@ lblList <- list(
     "Sacrifice Flies" = "SF",
     "Stolen Bases" = "SB",
     "Strikeouts" = "SO",
-    "Strikeouts to Home Runs Ratio" = "SOtoHR",
+    #"Strikeouts to Home Runs Ratio" = "SOtoHR",
     "Triples" = "X3B",
     "Walks" = "BB"
   )
@@ -35,10 +36,11 @@ statToLabel <- list(
   "OBP" = "On Base Percentage",
   "R" = "Runs Scored",
   "SO" = "Hitter Strikeouts",
-  "SOtoHR" = "Strikeouts to Home Runs Ratio",
+  #"SOtoHR" = "Strikeouts to Home Runs Ratio",
   "BB" = "Walks",
   "BBA" = "Walks Allowed",
   "HA" = "Hits Allowed",
+  "HRA" = "Home Runs Allowed",
   "SV" = "Saves",
   "SOA" = "Pitcher Strikeouts",
   "H" = "Hits",
@@ -56,10 +58,11 @@ statToShortLabel <- list(
   "OBP" = "OBP",
   "R" = "Runs Scored",
   "SO" = "SO",
-  "SOtoHR" = "SO to HR Ratio",
+  #"SOtoHR" = "SO to HR Ratio",
   "BB" = "BB",
   "BBA" = "BB Allowed",
   "HA" = "Hits Allowed",
+  "HRA" = "Home Runs Allowed",
   "SV" = "Saves",
   "SOA" = "Pitcher SO",
   "H" = "Hits",
