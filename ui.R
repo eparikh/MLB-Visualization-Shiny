@@ -18,7 +18,7 @@ shinyUI(dashboardPage(
     #hr(id = "sidebar-hr"),
     sidebarMenu(
       h5("Navigate:", id = "nav-label"),
-      menuItem("Mean differences", icon = icon("bar-chart"), newtab = FALSE, href="#top"),
+      menuItem("Mean differences", icon = icon("bar-chart"), newtab = FALSE, href="#diff"),
       menuItem("Hitting correlations", icon = icon("table"), newtab = FALSE, href = "#corr-hitting"),
       menuItem("Pitching correlations", icon = icon("table"), newtab = FALSE, href = "#corr-pitching")
     )

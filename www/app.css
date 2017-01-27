@@ -14,7 +14,8 @@
 }
 
 .skin-blue .sidebar-menu>li.active>a, .skin-blue .sidebar-menu>li:hover>a{
-  border-left-color: #cc0000;
+  background-color: #cc0000;
+  border-left: none;
 }
 
 
