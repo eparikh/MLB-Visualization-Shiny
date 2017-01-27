@@ -16,15 +16,15 @@ lblList <- list(
     "Doubles" = "X2B",
     "Hits" = "H",
     "Home Runs" = "HR",
-    "On Base Percentage" = "OBP",
+    "On Base %" = "OBP",
     "Runs Scored" = "R",
     "Sacrifice Flies" = "SF",
     "Stolen Bases" = "SB",
     "Strikeouts" = "SO",
-    #"Strikeouts to Home Runs Ratio" = "SOtoHR",
     "Triples" = "X3B",
     "Walks" = "BB"
-  )
+  ),
+  Both = c("Win %" = "winPercent")
 )
 
 lbls <- names(lblList)
@@ -36,7 +36,6 @@ statToLabel <- list(
   "OBP" = "On Base Percentage",
   "R" = "Runs Scored",
   "SO" = "Hitter Strikeouts",
-  #"SOtoHR" = "Strikeouts to Home Runs Ratio",
   "BB" = "Walks",
   "BBA" = "Walks Allowed",
   "HA" = "Hits Allowed",
@@ -48,7 +47,8 @@ statToLabel <- list(
   "X3B" = "Triples",
   "SB" = "Stolen Bases",
   "CS" = "Caught Stealing",
-  "SF" = "Sacrifice Flies"
+  "SF" = "Sacrifice Flies",
+  "winPercent" = "Win %"
 )
 
 statToShortLabel <- list(
@@ -58,7 +58,6 @@ statToShortLabel <- list(
   "OBP" = "OBP",
   "R" = "Runs Scored",
   "SO" = "SO",
-  #"SOtoHR" = "SO to HR Ratio",
   "BB" = "BB",
   "BBA" = "BB Allowed",
   "HA" = "Hits Allowed",
@@ -70,7 +69,8 @@ statToShortLabel <- list(
   "X3B" = "Triples",
   "SB" = "Stolen Bases",
   "CS" = "Caught Steals",
-  "SF" = "Sacrifice Flies"
+  "SF" = "Sacrifice Flies",
+  "winPercent" = "Win %"
 )
 
 summaryCols <- unlist(lblList, use.names = F)

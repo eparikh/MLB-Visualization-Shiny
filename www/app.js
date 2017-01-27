@@ -5,6 +5,40 @@ $(document).ready(function(){
 
   	var allSubHeaders = $(".subheader");
   	var allMenuItems = $(".sidebar-menu li");
+  	var allControlsToFilter = []
+
+  	//set menuitem ids
+  	allMenuItems[0].id = "diff-menu";
+  	allMenuItems[1].id = "hitting-menu";
+  	allMenuItems[2].id = "pitching-menu";
+
+  	//for click function
+  	menuTo = {
+  		"diff-menu":{
+  			id:"diff",
+  			showID: "theStat",
+  			hideIDs:["xyHitting", "xyPitching"]
+  		},
+  		"hitting-menu":{
+  			id:"corr-hitting",
+  			showID: "xyHitting",
+  			hideIDs: ["theStat", "xyPitching"]
+  		},
+  		"pitching-menu":{
+  			id:"corr-pitching",
+  			showID: "xyPitching",
+  			hideIDs: ["theStat", "xyHitting"]
+  		},
+  	}
+
+  	//handle clicks of menu
+  	allMenuItems.each(function(idx, obj){
+
+  		$(obj).click(function(){
+  			change(menuTo[this.id].id);
+  			showProperControl(menuTo[this.id].id);
+  		});
+  	});
 
 
   	var idToMapping = {
@@ -35,13 +69,16 @@ $(document).ready(function(){
 		if(isElemOnPage && (elemTop < pageHalf)){
 			//highlight the menu item of this element
 			change(elemID);
+			showProperControl(elemID)
 		} else if((elemID !== "diff") && isElemOnPage && (elemTop > pageHalf)){
 			//highlight the menu item one above the element's
 			//except for "diff" because nothing is above it
 			change(idToMapping[elemID].upindex);
+			showProperControl(idToMapping[elemID].upindex);
 		}
   	}
 
+  	//change the menu item
   	var change = function(changeID){
   		idToMapping[changeID].menuitem.css("background-color", "#cc0000");
 
@@ -51,6 +88,21 @@ $(document).ready(function(){
 	  		} 
   		});
   	}
+
+  	var showProperControl = function(elemID){
+  		m = idToMapping[elemID].menuitem.attr("id");
+  		showID = menuTo[m].showID;
+  		hideIDs = menuTo[m].hideIDs
+
+
+  		$("[for="+showID+"]").parent().show();
+
+  		$(hideIDs).each(function(i,v){
+  			$("[for="+v+"]").parent().hide();
+  		});
+  	}
+
+  	showProperControl("diff");
 
 	$(window).scroll(function() {
 		listenToElement($("#diff"))

@@ -13,9 +13,10 @@
   color: #ffffff;
 }
 
+
 .skin-blue .sidebar-menu>li.active>a, .skin-blue .sidebar-menu>li:hover>a{
-  background-color: #cc0000;
-  border-left: none;
+  background-color: inherit;
+  border-left: 3px solid #cc0000;
 }
 
 
@@ -24,7 +25,7 @@
 }
 
 .sidebar-menu{
-	/*border-right: 2px solid #ffffff;*/
+	/*border-left: 3px solid #cc0000;*/
 }
 
 /*** header bar background ***/

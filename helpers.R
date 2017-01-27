@@ -126,14 +126,17 @@ createNonPlayoffCorrPlots <- function(masterData, grps){
   
   masterData <- masterData[masterData$group %in% grps, ]
   
-  corr <- round(cor(masterData[,c(lblList$Hitting,"winPercent")]),3)
+  hitData <- masterData[,c(lblList$Hitting,"winPercent")]
+  
+  corr <- round(cor(hitData),3)
   corr[abs(corr)<.25]=0
-  p.mat <- cor_pmat(masterData[,c(lblList$Hitting,"winPercent")])
+  p.mat <- cor_pmat(hitData)
   gHitting <- ggcorrplot(corr,outline.color = "grey", type = "lower", ggtheme = theme_bw, p.mat = p.mat, insig = "blank", lab = TRUE)
   
-  corr <- round(cor(masterData[,c(lblList$Pitching,"winPercent")]),3)
+  pitchData <- masterData[,c(lblList$Pitching,"winPercent")]
+  corr <- round(cor(pitchData),3)
   corr[abs(corr)<.25]=0
-  p.mat <- cor_pmat(masterData[,c(lblList$Pitching,"winPercent")])
+  p.mat <- cor_pmat(pitchData)
   gPitching <- ggcorrplot(corr,outline.color = "grey", type = "lower", ggtheme = theme_bw, p.mat = p.mat, insig = "blank", lab = TRUE)
   
   return(list(
