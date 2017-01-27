@@ -5,7 +5,6 @@ library(DT)
 shinyUI(dashboardPage(
   dashboardHeader(title = "MLB Visualization"),
   dashboardSidebar(
-    #sidebarUserPanel("MLB Playoff Visualization", image = "baseball.jpg", subtitle = "he"),
     selectInput(inputId = "theStat", choices = lblList, label = h5("Select a variable:")),
     radioButtons(
       "includeBottom",
@@ -15,7 +14,6 @@ shinyUI(dashboardPage(
       selected = TRUE
     ),
     br(),
-    #hr(id = "sidebar-hr"),
     sidebarMenu(
       h5("Navigate:", id = "nav-label"),
       menuItem("Mean differences", icon = icon("bar-chart"), newtab = FALSE, href="#diff"),
@@ -27,15 +25,6 @@ shinyUI(dashboardPage(
     tags$head(
       tags$link(rel = "stylesheet", type = "text/css", href = "app.css")
     ),
-    # fluidRow(#PAGETITLE
-    #   box(
-    #     width = 12,
-    #     align = "left",
-    #     #background = "red",
-    #     h1(textOutput("pageTitle"), id = "page-title"),
-    #     id="title-box"
-    #   )
-    # ),
     fluidRow(#SECTION TITLE
       box(
         width = 12,

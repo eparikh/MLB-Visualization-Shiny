@@ -45,11 +45,6 @@ getDiff <- function(barPlotData, statistic, roundPlaces){
   
   data$Difference <- round(data$Difference, roundPlaces)
   
-  # data <- as.data.frame(data)
-  # rownames(data) <- data$Year
-  # print(colnames(data))
-  # data$Year <- NULL
-    
   return(list(
     data = data,
     mean = m
@@ -85,14 +80,11 @@ plotBar <- function(df, yCol, lab, yFrom, yTo, yBy, roundYAxis){
   ggplot(df, aes_string(x="yearID", y=yCol)) +
     geom_bar(stat="identity", position = "dodge", aes_string(fill = "madePlayoffs")) +
     labs(x="Year", y=paste("Mean", lab)) +
-    #ggtitle(label = paste("Mean", lab) , subtitle = "Non-playoff and playoff teams by year") +
     theme_fivethirtyeight() +
     theme(
       panel.spacing.x = unit(.2, "in"),
       panel.background = element_rect(fill = background),
       plot.background = element_blank(),
-      #plot.title = element_text(hjust = 0.5, size = 19),
-      #plot.subtitle = element_text(hjust = 0.5, size = 15, face = "italic"),
       axis.title = element_text(size = 14),
       axis.text.y = element_text(size = 12),
       axis.text.x = element_text(size = 12),
@@ -108,7 +100,6 @@ plotBar <- function(df, yCol, lab, yFrom, yTo, yBy, roundYAxis){
 }
 
 #rnd <- function(x){trunc(x+sign(x)*0.5)}
-
 
 ### GGCORRPLOTS ###
 createPlayoffCorrPlots <- function(masterData){
