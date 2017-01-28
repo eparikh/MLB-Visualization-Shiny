@@ -77,8 +77,11 @@ plotBar <- function(df, yCol, lab, yFrom, yTo, yBy, roundYAxis){
   xAxisTitle <- "Made Playoffs"
   background <- "#FFFFFF"
   
+  df$yearID <- as.numeric(as.character(df$yearID))
+  
   ggplot(df, aes_string(x="yearID", y=yCol)) +
-    geom_bar(stat="identity", position = "dodge", aes_string(fill = "madePlayoffs")) +
+    geom_bar(stat="identity", position = "dodge", alpha=0.65, aes(fill = madePlayoffs)) +
+    geom_line(show.legend = FALSE, size = 2, aes(color=madePlayoffs)) +
     labs(x="Year", y=paste("Mean", lab)) +
     theme_fivethirtyeight() +
     theme(
@@ -95,49 +98,37 @@ plotBar <- function(df, yCol, lab, yFrom, yTo, yBy, roundYAxis){
       legend.key.size = unit(.2, "in")
     ) +
     scale_fill_manual(name = "Made Playoffs", values = c("#cc0000", "#000088")) +
+    scale_color_manual(name = "Made Playoffs", values = c("#cc0000", "#000088")) +
     coord_cartesian(ylim=c(yFrom, yTo)) +
+    scale_x_continuous(breaks = 2005:2015) +
     scale_y_continuous(breaks = round(seq(yFrom, yTo, by = yBy), roundYAxis), labels = comma)
 }
 
 #rnd <- function(x){trunc(x+sign(x)*0.5)}
 
 ### GGCORRPLOTS ###
-createPlayoffCorrPlots <- function(masterData){
-  
-  masterData <- masterData[masterData$group==1,]
-  
-  corr <- round(cor(masterData[,c(lblList$Hitting,"winPercent")]),3)
-  corr[abs(corr)<.25]=0
-  p.mat <- cor_pmat(masterData[,c(lblList$Hitting,"winPercent")])
-  gHitting <- ggcorrplot(corr,outline.color = "gray", type = "lower", ggtheme = theme_bw, p.mat = p.mat, insig = "blank", lab = TRUE)
-  
-  corr <- round(cor(masterData[,c(lblList$Pitching,"winPercent")]),3)
-  corr[abs(corr)<.25]=0
-  p.mat <- cor_pmat(masterData[,c(lblList$Pitching,"winPercent")])
-  gPitching <- ggcorrplot(corr,outline.color = "gray", type = "lower", ggtheme = theme_bw, p.mat = p.mat, insig = "blank", lab = TRUE)
-  
-  return(list(
-    hitting = gHitting,
-    pitching = gPitching
-  ))
-}
-
-createNonPlayoffCorrPlots <- function(masterData, grps){
+createCorrPlots <- function(masterData, grps=1){
   
   masterData <- masterData[masterData$group %in% grps, ]
   
   hitData <- masterData[,c(lblList$Hitting,"winPercent")]
-  
   corr <- round(cor(hitData),3)
   corr[abs(corr)<.25]=0
-  p.mat <- cor_pmat(hitData)
-  gHitting <- ggcorrplot(corr,outline.color = "grey", type = "lower", ggtheme = theme_bw, p.mat = p.mat, insig = "blank", lab = TRUE)
+  #p.mat <- cor_pmat(hitData)
+  gHitting <- ggcorrplot(corr,outline.color = "#cccccc", type = "lower", ggtheme = theme_bw, lab = TRUE) +
+  theme(
+    panel.border = element_blank()
+  )
+  
   
   pitchData <- masterData[,c(lblList$Pitching,"winPercent")]
   corr <- round(cor(pitchData),3)
   corr[abs(corr)<.25]=0
-  p.mat <- cor_pmat(pitchData)
-  gPitching <- ggcorrplot(corr,outline.color = "grey", type = "lower", ggtheme = theme_bw, p.mat = p.mat, insig = "blank", lab = TRUE)
+  #p.mat <- cor_pmat(pitchData)
+  gPitching <- ggcorrplot(corr,outline.color = "#cccccc", type = "lower", ggtheme = theme_bw, lab = TRUE) +
+    theme(
+      panel.border = element_blank()
+    )
   
   return(list(
     hitting = gHitting,
@@ -151,8 +142,8 @@ plotScatter <- function(df, xCol, yCol, xLab, yLab, grps){
   background <- "#FFFFFF"
   
   ggplot(df, aes_string(x=xCol, y=yCol)) +
-    geom_smooth(method = "lm", se=FALSE, aes(color=madePlayoffs)) +
     geom_point(size = 3, aes(color=madePlayoffs)) +
+    geom_smooth(method = "lm", se=FALSE, aes(color=madePlayoffs)) +
     labs(x=xLab, y=yLab) +
     theme_fivethirtyeight() +
     theme(

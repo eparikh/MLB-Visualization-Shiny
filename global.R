@@ -23,8 +23,7 @@ lblList <- list(
     "Strikeouts" = "SO",
     "Triples" = "X3B",
     "Walks" = "BB"
-  ),
-  Both = c("Win %" = "winPercent")
+  )
 )
 
 lbls <- names(lblList)

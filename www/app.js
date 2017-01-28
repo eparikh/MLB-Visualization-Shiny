@@ -5,7 +5,6 @@ $(document).ready(function(){
 
   	var allSubHeaders = $(".subheader");
   	var allMenuItems = $(".sidebar-menu li");
-  	var allControlsToFilter = []
 
   	//set menuitem ids
   	allMenuItems[0].id = "diff-menu";
@@ -28,7 +27,7 @@ $(document).ready(function(){
   			id:"corr-pitching",
   			showID: "xyPitching",
   			hideIDs: ["theStat", "xyHitting"]
-  		},
+  		}
   	}
 
   	//handle clicks of menu
@@ -57,12 +56,21 @@ $(document).ready(function(){
   	}
 
   	var listenToElement = function(elem){
-  		var pageTop = $(window).scrollTop() + 30;
-  		var pageBottom = $(window).height() - 60;
-  		var pageHalf = (pageTop + 0.25 * pageBottom) *0.25;
+  		var h = 30;
+  		var pageTop = $(window).scrollTop() + h;
+  		var pageBottom = $(window).height() - 2*h;
+  		var pageHalf = 0.5 * (pageBottom - h);
   		var elemTop = $(elem).offset().top - pageTop;
 
+
   		elemID = elem.attr("id");
+
+  		/*console.log("\n")
+  		console.log(elemID + "\t" + elemTop)
+  		console.log("t:\t" + pageTop)
+  		console.log("m:\t" + pageHalf)
+  		console.log("b:\t" + pageBottom)
+  		console.log("\n")*/
 
 		var isElemOnPage = (0 < elemTop && elemTop < pageBottom);
 
@@ -102,7 +110,10 @@ $(document).ready(function(){
   		});
   	}
 
+  	//page initial
+  	change("diff")
   	showProperControl("diff");
+
 
 	$(window).scroll(function() {
 		listenToElement($("#diff"))

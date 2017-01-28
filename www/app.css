@@ -51,8 +51,8 @@ a.sidebar-toggle:hover{
 }
 
 .content{
-  margin-top: 35px;
-  padding: 25px;
+  margin: 0px;
+  padding: 85px 40px;
   background-color: #ffffff;
 }
 
