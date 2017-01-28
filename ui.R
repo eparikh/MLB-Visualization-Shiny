@@ -1,6 +1,6 @@
 library(shiny)
 library(shinydashboard)
-#library(DT)
+library(DT)
 
 shinyUI(dashboardPage(
   dashboardHeader(title = "MLB Visualization"),
@@ -59,21 +59,25 @@ shinyUI(dashboardPage(
     fluidRow(#SECTION
       box(
         width = 12,
+        dataTableOutput("diffTable"),
+        br(),
         title = h5(textOutput("barPlotTitle")),
         status = "primary",
         solidHeader = TRUE,
         collapsible = FALSE,
         plotOutput("barPlot")
-      )#,
-      # box(
-      #   width = 4,
-      #   title = h5(textOutput("diffTableTitle")),
-      #   status = "primary",
-      #   solidHeader = TRUE,
-      #   collapsible = FALSE,
-      #   dataTableOutput("diffTable")
-      # )
+      )
     ),
+    # fluidRow(
+    #   box(
+    #     width = 11,
+    #     title = h5(textOutput("diffTableTitle")),
+    #     status = "primary",
+    #     solidHeader = TRUE,
+    #     collapsible = FALSE
+    #     dataTableOutput("diffTable")
+    #   )
+    # ),
     fluidRow(#SECTION TITLE
       br(),
       box(

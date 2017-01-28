@@ -41,9 +41,17 @@ getDiff <- function(barPlotData, statistic, roundPlaces){
     spread_(key = "madePlayoffs", value = statistic) %>%
     summarise(Difference=Yes-No)
   
-  m <- mean(data$Difference)
+  #turn from vertical to horizontal to put under bar graph
+  data <- as.data.frame(data %>% spread(key=Year, value = Difference))
+  rownames(data) <- "(Playoff - Nonplayoff)"
   
-  data$Difference <- round(data$Difference, roundPlaces)
+  #change from column mean to row means
+  #m <- mean(data$Difference)
+  m <- apply(data, 1, mean)[[1]]
+  
+  #round dec places by row
+  #data$Difference <- round(data$Difference, roundPlaces)
+  data <- round(data, roundPlaces)
   
   return(list(
     data = data,

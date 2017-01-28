@@ -1,6 +1,6 @@
 library(shiny)
 library(shinydashboard)
-#library(DT)
+library(DT)
 
 source("helpers.R")
 
@@ -46,9 +46,9 @@ shinyServer(function(input, output){
     paste("Mean", shortLabel(), "by Year and Playoff Status")
   })
   
-  # output$diffTableTitle <- renderText({
-  #   paste("Difference of Playoff and Non-playoff", shortLabel())
-  # })
+  output$diffTableTitle <- renderText({
+    paste("Difference of Playoff and Non-playoff", shortLabel())
+  })
   
   #MEANDIFF
   #mean and data for mean differences
@@ -66,25 +66,25 @@ shinyServer(function(input, output){
   })
   
   #diff table
-  # output$diffTable <- renderDataTable(
-  #   datatable(
-  #     isolate({
-  #       diffList()$data
-  #     }),
-  #     options = list(
-  #       processing = FALSE,
-  #       searching = FALSE,
-  #       paging=FALSE,
-  #       ordering=FALSE
-  #     ),
-  #     selection="none"
-  #   )
-  # )
-  # 
-  # proxy = dataTableProxy("diffTable")
-  # observe({
-  #   replaceData(proxy, diffList()$data)
-  # })
+  output$diffTable <- renderDataTable(
+    datatable(
+      isolate({
+        diffList()$data
+      }),
+      options = list(
+        processing = FALSE,
+        searching = FALSE,
+        paging=FALSE,
+        ordering=FALSE
+      ),
+      selection="none"
+    )
+  )
+
+  proxy = dataTableProxy("diffTable")
+  observe({
+    replaceData(proxy, diffList()$data)
+  })
   
 
   #BAR PLOT
