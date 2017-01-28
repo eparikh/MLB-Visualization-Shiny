@@ -85,7 +85,7 @@ shinyUI(dashboardPage(
         class = "subheader"
       )
     ),
-    fluidRow(#SECTION
+    fluidRow(#CORRPLOT HITTING SECTION
       box(
         width = 6,
         title = h5("Playoff team hitting"),
@@ -103,6 +103,16 @@ shinyUI(dashboardPage(
         plotOutput("corrHittingNonPlayoff")
       )
     ),
+    fluidRow(#CORRPLOT HITTING SCATTER
+      box(
+        width = 12,
+        title = h5("Exploring relationships between hitting statistics"),
+        status = "primary",
+        solidHeader = TRUE,
+        collapsible = FALSE,
+        plotOutput("scatterHitting")
+      )
+    ),
     fluidRow(#SECTION TITLE
       br(),
       box(
@@ -114,7 +124,7 @@ shinyUI(dashboardPage(
         class = "subheader"
       )
     ),
-    fluidRow(#SECTION
+    fluidRow(#CORRPLOT PITCHING SECTION
       box(
         width = 6,
         title = h5("Playoff team pitching"),
@@ -126,10 +136,21 @@ shinyUI(dashboardPage(
       box(
         width = 6,
         title = h5("Non-playoff team pitching"),
+        align = "center",
         status = "primary",
         solidHeader = TRUE,
         collapsible = FALSE,
         plotOutput("corrPitchingNonPlayoff")
+      )
+    ),
+    fluidRow(#CORRPLOT PITCHING SCATTER
+      box(
+        width = 12,
+        title = h5("Exploring relationships between pitching statistics"),
+        status = "primary",
+        solidHeader = TRUE,
+        collapsible = FALSE,
+        plotOutput("scatterPitching")
       )
     ),
     tags$script(type = "text/javascript", src = "app.js")
