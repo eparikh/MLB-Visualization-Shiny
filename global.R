@@ -33,7 +33,7 @@ statToLabel <- list(
   "ERA" = "Earned Run Average",
   "BA" = "Batting Average",
   "HR" = "Home Runs",
-  "OBP" = "On Base Percentage",
+  "OBP" = "On Base %",
   "R" = "Runs Scored",
   "SO" = "Hitter Strikeouts",
   "BB" = "Walks",

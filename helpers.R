@@ -144,3 +144,30 @@ createNonPlayoffCorrPlots <- function(masterData, grps){
     pitching = gPitching
   ))
 }
+
+### SCATTERPLOTS ###
+plotScatter <- function(df, xCol, yCol, xLab, yLab, grps){
+  df <- df[df$group %in% grps, ]
+  background <- "#FFFFFF"
+  
+  ggplot(df, aes_string(x=xCol, y=yCol)) +
+    geom_smooth(method = "lm", se=FALSE, aes(color=madePlayoffs)) +
+    geom_point(size = 3, aes(color=madePlayoffs)) +
+    labs(x=xLab, y=yLab) +
+    theme_fivethirtyeight() +
+    theme(
+      panel.spacing.x = unit(.2, "in"),
+      panel.background = element_rect(fill = background),
+      plot.background = element_blank(),
+      axis.title = element_text(size = 14),
+      axis.text.y = element_text(size = 12),
+      axis.text.x = element_text(size = 12),
+      legend.position = "right",
+      legend.direction = "vertical",
+      legend.background = element_rect(fill = background),
+      legend.key = element_rect(fill = background),
+      legend.box.spacing = unit(0.05, "in"),
+      legend.key.size = unit(.2, "in")
+    ) +
+    scale_color_manual(name = "Made Playoffs", values = c("#cc0000", "#000088"))
+}

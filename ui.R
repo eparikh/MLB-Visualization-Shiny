@@ -88,7 +88,7 @@ shinyUI(dashboardPage(
     fluidRow(#CORRPLOT HITTING SECTION
       box(
         width = 6,
-        title = h5("Playoff team hitting"),
+        title = h5("Correlation coefficients: Playoff team hitting"),
         status = "primary",
         solidHeader = TRUE,
         collapsible = FALSE,
@@ -96,7 +96,7 @@ shinyUI(dashboardPage(
       ),
       box(
         width = 6,
-        title = h5("Non-playoff team hitting"),
+        title = h5("Correlation coefficients: Non-playoff team hitting"),
         status = "primary",
         solidHeader = TRUE,
         collapsible = FALSE,
@@ -106,10 +106,11 @@ shinyUI(dashboardPage(
     fluidRow(#CORRPLOT HITTING SCATTER
       box(
         width = 12,
-        title = h5("Exploring relationships between hitting statistics"),
+        title = h5(textOutput("scatterHittingTitle")),
         status = "primary",
         solidHeader = TRUE,
         collapsible = FALSE,
+        h4(textOutput("selectHittingMsg")),
         plotOutput("scatterHitting")
       )
     ),
@@ -127,7 +128,7 @@ shinyUI(dashboardPage(
     fluidRow(#CORRPLOT PITCHING SECTION
       box(
         width = 6,
-        title = h5("Playoff team pitching"),
+        title = h5("Correlation coefficients: Playoff team pitching"),
         status = "primary",
         solidHeader = TRUE,
         collapsible = FALSE,
@@ -135,7 +136,7 @@ shinyUI(dashboardPage(
       ),
       box(
         width = 6,
-        title = h5("Non-playoff team pitching"),
+        title = h5("Correlation coefficients: Non-playoff team pitching"),
         align = "center",
         status = "primary",
         solidHeader = TRUE,
@@ -146,10 +147,11 @@ shinyUI(dashboardPage(
     fluidRow(#CORRPLOT PITCHING SCATTER
       box(
         width = 12,
-        title = h5("Exploring relationships between pitching statistics"),
+        title = h5(textOutput("scatterPitchingTitle")),
         status = "primary",
         solidHeader = TRUE,
         collapsible = FALSE,
+        h4(textOutput("selectPitchingMsg")),
         plotOutput("scatterPitching")
       )
     ),
