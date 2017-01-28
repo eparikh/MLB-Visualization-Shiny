@@ -46,9 +46,9 @@ shinyServer(function(input, output){
     paste("Mean", shortLabel(), "by Year and Playoff Status")
   })
   
-  output$diffTableTitle <- renderText({
-    paste("Difference of Playoff and Non-playoff", shortLabel())
-  })
+  # output$diffTableTitle <- renderText({
+  #   paste("Difference of Playoff and Non-playoff", shortLabel())
+  # })
   
   #MEANDIFF
   #mean and data for mean differences
