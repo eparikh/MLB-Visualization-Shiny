@@ -35,8 +35,9 @@ shinyUI(dashboardPage(
       label = h5("Include bottom half of non-playoff teams in comparison?"),
       choices = list("Yes" = TRUE, "No" = FALSE),
       selected = TRUE
-    )
-  ),
+    ),
+    sidebarUserPanel("Emil Parikh")
+  ), #end sidebar
   dashboardBody(
     tags$head(
       tags$link(rel = "stylesheet", type = "text/css", href = "app.css")

@@ -129,3 +129,19 @@ div.box{
 #nav-label{
 	padding: 12px 15px 0px 12px;
 }
+
+.user-panel{
+	position: absolute;
+	padding: 30px;
+	bottom: 0px;
+}
+
+.user-panel > .info{
+	right: 4px;
+}
+
+.user-panel p{
+	font-weight: normal !important;
+	font-style: italic;
+	text-align: right;
+}
