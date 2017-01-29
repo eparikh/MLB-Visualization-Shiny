@@ -121,9 +121,9 @@ createCorrPlots <- function(masterData, grps=1){
   
   hitData <- masterData[,c(lblList$Hitting,"winPercent")]
   corr <- round(cor(hitData),3)
-  corr[abs(corr)<.25]=0
-  #p.mat <- cor_pmat(hitData)
-  gHitting <- ggcorrplot(corr,outline.color = "#cccccc", type = "lower", ggtheme = theme_bw, lab = TRUE) +
+  #corr[abs(corr)<.25]=0
+  p.mat <- cor_pmat(hitData)
+  gHitting <- ggcorrplot(corr,outline.color = "#cccccc", type = "lower", p.mat = p.mat, insig = "blank", ggtheme = theme_bw, lab = TRUE) +
   theme(
     panel.border = element_blank()
   )
@@ -131,9 +131,9 @@ createCorrPlots <- function(masterData, grps=1){
   
   pitchData <- masterData[,c(lblList$Pitching,"winPercent")]
   corr <- round(cor(pitchData),3)
-  corr[abs(corr)<.25]=0
-  #p.mat <- cor_pmat(pitchData)
-  gPitching <- ggcorrplot(corr,outline.color = "#cccccc", type = "lower", ggtheme = theme_bw, lab = TRUE) +
+  #corr[abs(corr)<.25]=0
+  p.mat <- cor_pmat(pitchData)
+  gPitching <- ggcorrplot(corr,outline.color = "#cccccc", type = "lower", p.mat = p.mat, insig = "blank", ggtheme = theme_bw, lab = TRUE) +
     theme(
       panel.border = element_blank()
     )
