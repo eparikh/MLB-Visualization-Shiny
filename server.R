@@ -1,6 +1,8 @@
-library(shiny)
-library(shinydashboard)
-library(DT)
+suppressMessages({
+  library(shiny)
+  library(shinydashboard)
+  library(DT)
+})
 
 source("helpers.R")
 

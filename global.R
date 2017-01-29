@@ -1,5 +1,7 @@
-library(shiny)
-library(shinydashboard)
+suppressMessages({
+  library(shiny)
+  library(shinydashboard)
+})
 
 lblList <- list(
   Pitching = c(

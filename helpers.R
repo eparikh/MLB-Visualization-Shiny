@@ -1,11 +1,14 @@
-library(dplyr)
-library(ggplot2)
-library(ggcorrplot)
-library(tidyr)
-library(scales)
-library(ggthemes)
-library(grid)
-library(gridExtra)
+suppressMessages({
+  library(dplyr)
+  library(ggplot2)
+  library(ggcorrplot)
+  library(tidyr)
+  library(scales)
+  library(ggthemes)
+  library(grid)
+  library(gridExtra)
+})
+
 
 #use function to prepare master data to use garbage cleanup
 #rather than relying on access to rm() command

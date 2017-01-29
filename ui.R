@@ -1,6 +1,8 @@
-library(shiny)
-library(shinydashboard)
-library(DT)
+suppressMessages({
+  library(shiny)
+  library(shinydashboard)
+  library(DT)
+})
 
 shinyUI(dashboardPage(
   dashboardHeader(title = "MLB Visualization"),
