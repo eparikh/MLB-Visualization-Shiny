@@ -11,6 +11,7 @@ shinyUI(dashboardPage(
       menuItem("Hitting correlations", icon = icon("table"), newtab = FALSE, href = "#corr-hitting"),
       menuItem("Pitching correlations", icon = icon("table"), newtab = FALSE, href = "#corr-pitching")
     ),
+    br(),
     #select meandiff
     selectInput(inputId = "theStat", label = h5("Select a variable:"), choices = lblList),
     #select scatter hitting
@@ -29,6 +30,7 @@ shinyUI(dashboardPage(
       multiple = TRUE,
       options = list(maxItems = 2)
     ),
+    br(),
     radioButtons(
       "includeBottom",
       inline = TRUE,
