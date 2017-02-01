@@ -91,8 +91,9 @@ plotBar <- function(df, yCol, lab, yFrom, yTo, yBy, roundYAxis){
   df$yearID <- as.numeric(as.character(df$yearID))
   
   ggplot(df, aes_string(x="yearID", y=yCol)) +
-    geom_bar(stat="identity", position = "dodge", alpha=0.65, aes(fill = madePlayoffs)) +
-    geom_line(show.legend = FALSE, size = 2, aes(color=madePlayoffs)) +
+    #geom_bar(stat="identity", position = "dodge", alpha=0.65, aes(fill = madePlayoffs)) +
+    geom_bar(stat="identity", position = "dodge", aes(fill = madePlayoffs)) +
+    #geom_line(show.legend = FALSE, size = 2, aes(color=madePlayoffs)) +
     labs(x="Year", y=paste("Mean", lab)) +
     theme_fivethirtyeight() +
     theme(
@@ -109,7 +110,7 @@ plotBar <- function(df, yCol, lab, yFrom, yTo, yBy, roundYAxis){
       legend.key.size = unit(.2, "in")
     ) +
     scale_fill_manual(name = "Made Playoffs", values = c("#cc0000", "#000088")) +
-    scale_color_manual(name = "Made Playoffs", values = c("#cc0000", "#000088")) +
+    #scale_color_manual(name = "Made Playoffs", values = c("#cc0000", "#000088")) +
     coord_cartesian(ylim=c(yFrom, yTo)) +
     scale_x_continuous(breaks = 2005:2015) +
     scale_y_continuous(breaks = round(seq(yFrom, yTo, by = yBy), roundYAxis), labels = comma)
