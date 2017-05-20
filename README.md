@@ -4,3 +4,5 @@ R Shiny dashboard exploring differences in MLB statistics for non-playoff and pl
 [Blog post](https://blog.nycdatascience.com/student-works/r-shiny/case-missing-offense/) | 
 [App](https://eparikh.shinyapps.io/mlb-visualization/)
 
+![](dashboard_demo.gif)
+
